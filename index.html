@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Peer to Peer</title>
+    <script src="peer.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.0.js"></script>
+
+    <style type="text/css" media="screen">
+        #editor { 
+            position: absolute;
+            top: 100px;
+            right: 0;
+            bottom: 20px;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="editor">function foo(items) {
+    var x = "All this is syntax highlighted";
+    return x;
+}</div>
+    
+<script src="http://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/javascript");
+</script>
+
+
+    <script type="text/javascript">
+        var peer = new Peer({ key: 'eagtl8kba9qnnrk9' });
+        peer.on('open', function (id) {
+            console.log('My peer ID is: ' + id);
+            document.getElementById("myPeerID").innerText = id;
+        });
+        
+        function communicate(conn) {
+            conn.on('open', function () {
+                // Receive messages
+                conn.on('data', function (data) {
+                    if (editor.getValue() !== data) {
+                        editor.setValue(data);
+                        console.log('Received', data);
+                    }
+                });
+
+                // Send messages
+                editor.getSession().on('change', function (e) {
+                    setTimeout(function () {
+                        conn.send(editor.getValue());
+                    }, 25);
+                });
+            });
+        };
+
+        // Outgoing
+        $(function () {
+            $('#connectBtn').click(event, function () {
+                var conn = peer.connect(document.getElementById("targetPeerID").value);
+                communicate(conn);
+            });
+        });
+
+
+        // Incoming
+        peer.on('connection', function (conn) {
+            communicate(conn);
+        });
+    </script>
+
+    <div>
+        My Peer Id: <span id="myPeerID"></span>
+    </div>
+    <div>
+        <input type="text" id="targetPeerID"/>
+        <button id="connectBtn">Connect</button>
+    </div>
+
+</body>
+</html>
