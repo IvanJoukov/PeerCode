@@ -54,7 +54,12 @@ $(function () {
                 call.on('stream', function (stream) {
                     video.src = window.webkitURL.createObjectURL(stream);
                 });
-
+            }, 
+            function (error) {
+                call.answer();
+                call.on('stream', function (stream) {
+                    video.src = window.webkitURL.createObjectURL(stream);
+                });
             }
         );
     });
@@ -71,6 +76,11 @@ $(function () {
         navigator.webkitGetUserMedia({ video: true, audio: true },
              function (mediaStream) {
                  call.answer(mediaStream);
+                 call.on('stream', function (stream) {
+                     video.src = window.webkitURL.createObjectURL(stream);
+                 });
+             }, function (error) {
+                 call.answer();
                  call.on('stream', function (stream) {
                      video.src = window.webkitURL.createObjectURL(stream);
                  });
