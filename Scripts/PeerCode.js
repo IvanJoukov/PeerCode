@@ -27,7 +27,7 @@ function communicate(conn) {
         conn.on('data', function (data) {
             var delta = JSON.parse(data);
             editor.getSession().off('change', changeHandler);
-            editor.getSession().getDocument().applyDeltas([delta.data]);
+            editor.getSession().getDocument().applyDeltas([delta]);
             editor.getSession().on('change', changeHandler);
         });
 
@@ -52,13 +52,13 @@ $(function () {
             function (mediaStream) {
                 var call = peer.call(document.getElementById("targetPeerID").value, mediaStream);
                 call.on('stream', function (stream) {
-                    video.src = window.webkitURL.createObjectURL(stream);
+                    video.src = window.URL.createObjectURL(stream);
                 });
             }, 
             function (error) {
                 call.answer();
                 call.on('stream', function (stream) {
-                    video.src = window.webkitURL.createObjectURL(stream);
+                    video.src = window.URL.createObjectURL(stream);
                 });
             }
         );
@@ -77,12 +77,12 @@ $(function () {
              function (mediaStream) {
                  call.answer(mediaStream);
                  call.on('stream', function (stream) {
-                     video.src = window.webkitURL.createObjectURL(stream);
+                     video.src = window.URL.createObjectURL(stream);
                  });
              }, function (error) {
                  call.answer();
                  call.on('stream', function (stream) {
-                     video.src = window.webkitURL.createObjectURL(stream);
+                     video.src = window.URL.createObjectURL(stream);
                  });
              }
          );
