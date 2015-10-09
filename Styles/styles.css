@@ -1,7 +1,7 @@
 ﻿#editor
 {
     position:absolute;
-    top: 75px;
+    top: 125px;
     left:0%;
     right:50%;
     bottom:30%;
@@ -15,15 +15,34 @@
     right:0%;
     bottom:0%;
 }
-#modeSelection{
-    float:right;
+
+.disconnected > #disConnectBtn {
+    display: none;
 }
 
-.disconnected
+.disconnected #connectionInfo
 {
     color:red;
 }
-.connected
+#connectionInfo
 {
     color:green;
+}
+
+#connectionControls {
+    position: relative;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+.white-colour {
+    color: white;
+}
+.editor-grey-background {
+    background-color: #272822;
+}
+
+.margin-top-5px {
+    margin-top: 5px;
 }

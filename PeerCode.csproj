@@ -86,7 +86,6 @@
     <Content Include="Scripts\jquery-2.1.4.min.js" />
     <Content Include="Scripts\libs\peer.js" />
     <Content Include="Scripts\libs\peer.min.js" />
-    <Content Include="Scripts\peerold.js" />
     <Content Include="Scripts\PeerCode.js" />
     <Content Include="Styles\styles.css" />
     <Content Include="Web.config" />
